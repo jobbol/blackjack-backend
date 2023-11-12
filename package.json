@@ -1,0 +1,17 @@
+{
+  "name": "blackjack-backend",
+  "version": "1.0.0",
+  "description": "Multiplayer backend for blackjack.",
+  "main": "./src/index.mjs",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "common-es": "^1.0.1",
+    "ws": "^8.14.2"
+  }
+}
