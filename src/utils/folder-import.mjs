@@ -6,13 +6,13 @@ import { fileURLToPath, pathToFileURL } from 'url';
 /**
  * Imports an entire folder of modules.  Shallow only.  Does not search folders within the given folder.
  * 
- * @typedef {object} folderImportOutput
+ * @typedef {object}  fileImportObj
  * @property {string} full - Absolute path + filename + ext.
  * @property {...any} exports - All exports from the file are spread into this output.
  * 
  * @param {string} folderPath - Path to the folder to import
  * @param {{string | string[]}} ignoreFiles - filenames to exclude.  Uses partial matching.  'card' will exclude 'card-reader.mjs'.
- * @returns {folderImportOutput}
+ * @returns {fileImportObj[]}
  */
 export default async function folderImport (folderPath, ignoreFiles = []) {
     let modules = [];
