@@ -1,5 +1,5 @@
 import { WebSocketServer } from 'ws';
-import router from 'router';
+import router from './router.mjs';
 
 const wss = new WebSocketServer({ port: 8080 });
 const server = {

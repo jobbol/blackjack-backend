@@ -12,7 +12,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
  * 
  * @param {string} folderPath - Path to the folder to import
  * @param {{string | string[]}} ignoreFiles - filenames to exclude.  Uses partial matching.  'card' will exclude 'card-reader.mjs'.
- * @returns {fileImportObj[]}
+ * @returns {Promise<fileImportObj[]>}
  */
 export default async function folderImport (folderPath, ignoreFiles = []) {
     let modules = [];
