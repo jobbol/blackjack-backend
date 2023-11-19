@@ -1,16 +1,11 @@
-import { WebSocketServer } from 'ws';
-import router from './router.mjs';
+import websocket from './websocket/websocket.mjs';
+import rest from './rest/rest.mjs';
 
-const wss = new WebSocketServer({ port: 8080 });
-const server = {
-  games: [],
-  clients: []
-};
+const global = {
+    games: [],
+    users: []
+  };
 
-wss.on('connection', function connection(ws) {
-  ws.on('error', console.error);
 
-  ws.on('message', function message(data) {
-    router({server, wss, ws, data});
-  });
-});
+websocket({global});
+rest({global});

@@ -4,7 +4,8 @@ import path from 'path';
 import { WebSocketServer } from "ws";
 
 const { __dirname, __filename } = getGlobals(import.meta.url);
-const routesPath = path.join(__dirname, '/routes');
+
+const routesPath = path.join(__dirname, './routes');
 
 const routes = await folderImport(routesPath);
 verifyFolderImportRoutes(routes);
