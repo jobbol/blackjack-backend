@@ -18,8 +18,19 @@ app.use(function (req, res, next) {
       req.text = string
       next()
     })
-})
+});
 
+
+//Limit max request bodies to prevent DoS.
+app.use(express.urlencoded({ extended: true, limit: "1kb" }));
+app.use(express.json({ limit: "1kb" }));
+
+
+//Prevent errors from bubbling up to user.
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('{error: An error has occured.}');
+ });
 
 
 export default function ({global}) {
