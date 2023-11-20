@@ -1,18 +1,18 @@
 import { WebSocketServer } from 'ws';
-import router from '../router.mjs';
+import router from './ws-router.mjs';
+import blackjackWebSocket from './blackjack-websocket.mjs';
 
 const wss = new WebSocketServer({ port: 8080 });
 
-let nextUserID = 0;
-
-export default function ({server}) {
+export default function ({global}) {
   wss.on('connection', function connection(ws) {
-    const clientID = nextUserID++;
     ws.on('error', console.error);
   
     
     ws.on('message', function message(data) {
-      router({server, wss, ws, data, clientID});
+      router({global, wss, ws, data, clientID});
     });
   });
+
+  blackjackWebSocket({global, wss});
 };

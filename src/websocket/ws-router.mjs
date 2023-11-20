@@ -1,4 +1,4 @@
-import folderImport from "./utils/folder-import.mjs";
+import folderImport from "../utils/folder-import.mjs";
 import { getGlobals } from 'common-es';
 import path from 'path';
 import { WebSocketServer } from "ws";

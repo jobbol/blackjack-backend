@@ -1,9 +1,11 @@
 import websocket from './websocket/websocket.mjs';
 import rest from './rest/rest.mjs';
+import EventEmitter from 'node:events';
 
 const global = {
-    games: [],
-    users: []
+    rooms: [],
+    users: [],
+    events: new EventEmitter()
   };
 
 

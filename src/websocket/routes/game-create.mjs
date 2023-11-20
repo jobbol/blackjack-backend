@@ -1,5 +1,5 @@
 export const type = 'route';
-export const name = 'join';
+export const name = 'create';
 
 let nextRoomID = 0;
 
