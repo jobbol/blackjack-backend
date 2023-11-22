@@ -26,21 +26,24 @@ app.listen(restPort);
 
 
 
-export default function (params) {
+
+export default async function (params) {
+
   const { global } = params;
   params.expressApp = app;
   
-  app.get('/', (req, res) => {
-      res.send('hello world');
-  });
+  const routes = await folderImport(__dirname + '/routes');
+  routes.map(route => route.default({app, global}));
+
   app.listen(restPort);
+
+  //Prevent errors from bubbling up to user.
+  //Error handler must always be defined after all routes, and app.use calls.
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('{error: An error has occured.}');
+  });
 }
 
 
 
-//Prevent errors from bubbling up to user.
-//Error handler must always be defined after all routes, and app.use calls.
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('{error: An error has occured.}');
-});
