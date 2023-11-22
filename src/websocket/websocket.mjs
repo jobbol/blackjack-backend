@@ -1,18 +1,24 @@
-import { WebSocketServer } from 'ws';
-import router from './ws-router.mjs';
+import { Server } from 'socket.io';
+import { createServer } from 'node:http';
+
 import blackjackWebSocket from './blackjack-websocket.mjs';
+import configGet from '../utils/config-get.mjs';
+const { socketPort } = configGet("./config/server.json", {socketPort: 8102});
 
-const wss = new WebSocketServer({ port: 8080 });
+export default function (params) {
+  const {global, expressApp} = params;
 
-export default function ({global}) {
-  wss.on('connection', function connection(ws) {
-    ws.on('error', console.error);
+  const server = createServer(expressApp);
+  const io = new Server(server);
+
+
+  io.on('connection', (socket) => {
+    console.log('a user connected');
+  });
   
-    
-    ws.on('message', function message(data) {
-      router({global, wss, ws, data, clientID});
-    });
+  server.listen(socketPort, () => {
+    console.log(`server running at http://localhost:${socketPort}`);
   });
 
-  blackjackWebSocket({global, wss});
-};
+  params.socketApp = io;
+}

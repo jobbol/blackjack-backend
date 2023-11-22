@@ -36,11 +36,14 @@ app.use(express.json({ limit: "1kb" }));
 
 
 
-export default function ({global}) {
-    app.get('/', (req, res) => {
-        res.send('hello world');
-    });
-    app.listen(restPort)
+export default function (params) {
+  const { global } = params;
+  params.expressApp = app;
+  
+  app.get('/', (req, res) => {
+      res.send('hello world');
+  });
+  app.listen(restPort);
 }
 
 const routes = folderImport('./rest/routes');
