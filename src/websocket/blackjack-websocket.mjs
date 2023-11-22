@@ -2,11 +2,11 @@ import Blackjack from '../game/blackjack.mjs';
 
 
 export default function gameStartListener ({global, ws}) {
-    global.events.on('game-start', (gameID) => {
-        const game = global.games.find(game => game.id === gameID);
+    global.events.on('game-start', (roomID) => {
+        const room = global.rooms.find(room => room.id === roomID);
 
-        if (!game) {
-            throw new Error('Could not find game with that ID.');
+        if (!room) {
+            throw new Error('Could not find room with that ID.');
         }
 
         wss.emit();

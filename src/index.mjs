@@ -9,5 +9,6 @@ const global = {
   };
 
 
-websocket({global});
+
 rest({global});
+websocket({global});
