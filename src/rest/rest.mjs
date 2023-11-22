@@ -1,7 +1,8 @@
 import express from 'express';
-import contentType from 'content-type';
-import getRawBody  from 'raw-body';
-import bodyParser from 'body-parser';
+import cors from 'cors';
+import { getGlobals } from 'common-es'
+const { __dirname, __filename } = getGlobals(import.meta.url);
+
 
 import folderImport from '../utils/folder-import.mjs';
 import configGet  from '../utils/config-get.mjs';
@@ -10,29 +11,18 @@ const { restPort } = configGet("./config/server.json", {restPort: 8101});
 const app = express();
 
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
-app.use(bodyParser.json());
-
-//Limit max request bodies to prevent DoS.
-app.use(function (req, res, next) {
-    getRawBody(req, {
-      length: req.headers['content-length'],
-      limit: '1kb',
-      encoding: contentType.parse(req).parameters.charset
-    }, function (err, string) {
-      if (err) return next(err)
-      req.text = string
-      next()
-    })
-});
-
-
 //Limit max request bodies to prevent DoS.
 app.use(express.urlencoded({ extended: true, limit: "1kb" }));
 app.use(express.json({ limit: "1kb" }));
 
+app.use(cors());
+
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+});
+
+app.listen(restPort);
 
 
 
@@ -46,8 +36,6 @@ export default function (params) {
   app.listen(restPort);
 }
 
-const routes = folderImport('./rest/routes');
-console.log(routes);
 
 
 //Prevent errors from bubbling up to user.
@@ -55,4 +43,4 @@ console.log(routes);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('{error: An error has occured.}');
- });
+});
