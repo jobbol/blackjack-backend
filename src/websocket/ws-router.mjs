@@ -55,7 +55,7 @@ export default function router (params) {
 function isObject(obj) {
     let type = typeof obj;
     return !Array.isArray(obj) && type !== 'function' && type === 'object' && !!obj;
-  };
+};
 
 
 
