@@ -25,6 +25,6 @@ export default function generateID (global) {
         if (i > 10) {
             return Date.now().toString();
         }
-    } while(collision);
+    }
     return out;
 }
