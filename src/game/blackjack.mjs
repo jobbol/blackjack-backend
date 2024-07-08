@@ -54,9 +54,9 @@ export default class Blackjack {
         }
     
         //If a player has busted, attempt to reduce score if they have aces.
-        let aces = users[userIndex].filter((card) => card.rank === 'A').length;
-        while (score >= bustAmount && aces > 0) {
-            aces--;
+        let aceCount = users[userIndex].filter((card) => card.rank === 'A').length;
+        while (score >= bustAmount && aceCount > 0) {
+            aceCount--;
             score-=10;
         }
         return score;
@@ -85,7 +85,7 @@ endStats (params) {
     let winnerScore = 0;
 
     scores.forEach((score, index) => {
-        //If this score isn't a bust and is the lowest, then make this the winner and reset possible ties.
+        //If this score isn't a bust and is the highest, then make this the winner and reset possible ties.
         if (score < bustAmount && score > winnerScore) {
             winnerIndex = index;
             isTied = false;
@@ -102,7 +102,7 @@ endStats (params) {
         }
     });
 
-    //Dealer wins if dealer and all players bust.
+    //Dealer wins by default if dealer and all players bust.
     if (scores.every((score) => score >= bustAmount) && hasDealer) {
         winnerIndex = 0;
         winnerScore = scores[0];
